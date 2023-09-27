@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<integration xmlns="http://guidewire.com/config/integration/inbound">
+    <file-integration name="MyFilePollingIntegration" disabled="false">
+            <threadpool>gw_default</threadpool>
+            <pollinginterval>15</pollinginterval>
+            <throttleinterval>5</throttleinterval>
+            <ordered>true</ordered>
+            <stoponerror>false</stoponerror>
+            <transactional>false</transactional>
+            <osgiservice>true</osgiservice>
+            <traceabilityidcreationpoint>INBOUND_INTEGRATION_FILE</traceabilityidcreationpoint>
+            <pluginhandler>MyInboundIntegrationPlugin</pluginhandler>
+            <processingmode>line</processingmode>
+            <incoming>C:/tmp/file/incoming</incoming>
+            <processing>C:/tmp/file/processing</processing>
+            <error>C:/tmp/file/error</error>
+            <done>C:/tmp/file/done</done>
+            <charset>UTF-8</charset>
+            <createdirectories>true</createdirectories>
+        </file-integration>
+    </integrations>
+</integration>

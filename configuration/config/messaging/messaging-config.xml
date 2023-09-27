@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- ==============================================================================
+   Messaging Configuration
+  ============================================================================== -->
+<messaging-config
+  defaultServer="#messaging"
+  xmlns="http://guidewire.com/messaging-config">
+  <messaging>
+    <destination
+      aftersendplugin="ICustomMessagingAfterSendPlugin_Ext"
+      id="61"
+      name="CustomMessaging"
+      requestplugin="ICustomMessagingRequesPlugin_Ext"
+      transportplugin="ICustomMessagingTransportPlugin_Ext">
+      <event
+        name="MyCustomEvent_Ext"/>
+    </destination>
+  </messaging>
+</messaging-config>

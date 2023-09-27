@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="MyEntityToTestDelegate"
+  table="myentitytotestdelegate"
+  type="retireable">
+  <implementsEntity
+    name="MyDelegate"/>
+  <column
+    name="ThisTableColumn"
+    nullok="true"
+    type="shorttext"/>
+  <implementsInterface
+    iface="training.integrations.delegates.MyDelegate2"
+    impl="training.integrations.delegates.MyDelegate2Impl"/>
+</entity>

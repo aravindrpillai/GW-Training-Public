@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="true"
+    countsAsWork="false"
+    id="PropertyInfoPage"
+    parent="InfoPages()"
+    startInEditMode="true"
+    title="&quot;Application Properties&quot;">
+   <Screen>
+
+     <Variable
+       initialValue="new training.util.properties.framework.PropertyUIHelper()"
+       name="uiHelper"
+       type="training.util.properties.framework.PropertyUIHelper"/>
+     <Variable
+       initialValue="null"
+       name="searchKeyword"
+       type="String"/>
+     <Variable
+       initialValue="null"
+       name="selectedProperty"
+       type="ApplicationProperties"/>
+     <Variable
+       initialValue="uiHelper.search()"
+       name="appPropertiesFromSearch"
+       type="gw.api.database.IQueryBeanResult&lt;ApplicationProperties&gt;"/>
+     <Variable
+       initialValue="null"
+       name="useOverriddenBackUp"
+       type="Boolean"/>
+     <Variable
+       initialValue="null"
+       name="overriddenBackUp"
+       type="String"/>
+     <PanelRef
+       visible="training.util.properties.framework.PropertyConstants.EnablePropertyUpdate">
+       <Toolbar>
+         <ToolbarInput
+           editable="true"
+           id="SearchKeyword"
+           label="&quot;Filter Keyword&quot;"
+           value="searchKeyword"
+           valueType="java.lang.String"/>
+         <ToolbarButton
+           action="appPropertiesFromSearch = uiHelper.search(searchKeyword);  selectedProperty = null;"
+           id="FilterID"
+           label="&quot;Filter&quot;"/>
+         <ToolbarButton
+           action="searchKeyword = null; appPropertiesFromSearch = uiHelper.search(searchKeyword); selectedProperty = null;"
+           id="ResetID"
+           label="&quot;Reset&quot;"/>
+         <ToolbarInput
+           id="EnvID"
+           label="&quot;Environment : &quot;"
+           value="training.util.properties.framework.PropertiesUtil.Environment"
+           valueType="java.lang.String"/>
+         <ToolbarButton
+           action="selectedProperty = new ApplicationProperties(){:NewlyAdded=true, :Root=&quot;NewlyAdded&quot;}; useOverriddenBackUp = null; overriddenBackUp = null;"
+           id="AddNewProp"
+           label="&quot;Add New Property&quot;"/>
+       </Toolbar>
+       <ListViewPanel>
+         <RowIterator
+           appendPageInfo="true"
+           editable="false"
+           elementName="appProperty"
+           pageSize="10"
+           value="appPropertiesFromSearch"
+           valueType="gw.api.database.IQueryBeanResult&lt;entity.ApplicationProperties&gt;">
+           <Row>
+             <TextCell
+               action="selectedProperty = appProperty; useOverriddenBackUp = appProperty.UseOverrideValue; overriddenBackUp = appProperty.OverrideValue;"
+               id="Key"
+               label="&quot;Key&quot;"
+               value="appProperty.Key"/>
+             <TextCell
+               action="selectedProperty = appProperty; useOverriddenBackUp = appProperty.UseOverrideValue; overriddenBackUp = appProperty.OverrideValue;"
+               id="Value"
+               label="&quot;Value&quot;"
+               value="appProperty.Value"
+               width="600px"/>
+             <TextCell
+               id="Override"
+               label="&quot;Value Overridden?&quot;"
+               value="appProperty.UseOverrideValue ? &quot;Yes&quot; : &quot;&quot;"/>
+             <TextCell
+               id="NewlyAddedID"
+               label="&quot;Newly Added&quot;"
+               value="appProperty.NewlyAdded ? &quot;Yes&quot; : &quot;&quot;"/>
+           </Row>
+         </RowIterator>
+       </ListViewPanel>
+     </PanelRef>
+     <PanelRef
+       border="true"
+       visible="selectedProperty != null and training.util.properties.framework.PropertyConstants.EnablePropertyUpdate">
+       <Toolbar>
+         <ToolbarButton
+           action="if(canCommit(selectedProperty)) { gw.transaction.Transaction.Current.add(selectedProperty).Bundle.commit(); if(selectedProperty.NewlyAdded){appPropertiesFromSearch = uiHelper.search();} selectedProperty = null; } else { throw new gw.api.util.DisplayableException(&quot;Key already Exists&quot;)} "
+           id="SaveID"
+           label="&quot;Save and Close&quot;"/>
+         <ToolbarButton
+           action="if(selectedProperty.NewlyAdded) {gw.transaction.Transaction.Current.InsertedBeans.remove(selectedProperty)} else {selectedProperty.UseOverrideValue = useOverriddenBackUp; selectedProperty.OverrideValue=overriddenBackUp; } selectedProperty = null;"
+           id="Close"
+           label="&quot;Revert Changes and Close&quot;"/>
+         <ToolbarButton
+           action="gw.transaction.Transaction.Current.add(selectedProperty).remove(); selectedProperty.Bundle.commit(); selectedProperty = null"
+           available="selectedProperty.NewlyAdded"
+           id="DeleteButtonID"
+           label="&quot;Delete&quot;"/>
+       </Toolbar>
+       <DetailViewPanel
+         border="true">
+         <InputColumn>
+           <TextInput
+             editable="selectedProperty.NewlyAdded"
+             id="Key"
+             label="&quot;Key&quot;"
+             value="selectedProperty.Key"/>
+           <TextInput
+             editable="selectedProperty.NewlyAdded"
+             id="Value"
+             label="&quot;Value&quot;"
+             value="selectedProperty.Value"/>
+           <CheckBoxInput
+             available="not selectedProperty.NewlyAdded"
+             editable="not selectedProperty.NewlyAdded"
+             id="UseOverride"
+             label="&quot;Use Overridden Value&quot;"
+             required="false"
+             value="selectedProperty.UseOverrideValue">
+             <PostOnChange/>
+           </CheckBoxInput>
+           <TextInput
+             available="selectedProperty.UseOverrideValue and (not selectedProperty.NewlyAdded)"
+             editable="not selectedProperty.NewlyAdded"
+             id="OverrideValue"
+             label="&quot;Override Value&quot;"
+             value="selectedProperty.OverrideValue"></TextInput>
+         </InputColumn>
+       </DetailViewPanel>
+     </PanelRef>
+     <ListViewPanel
+       visible="selectedProperty != null and (not selectedProperty.NewlyAdded) and training.util.properties.framework.PropertyConstants.EnablePropertyUpdate">
+       <RowIterator
+         editable="false"
+         elementName="envPair"
+         id="EnvPairID"
+         value="new training.util.properties.framework.PropertyUIHelper().getDataFromAllEnvs(selectedProperty.Key)"
+         valueType="java.util.List&lt;gw.util.Pair&lt;java.lang.String,java.lang.String&gt;&gt;">
+         <Row>
+           <TextCell
+             id="EnvID"
+             label="&quot;Environment&quot;"
+             value="envPair.First"/>
+           <TextCell
+             id="ValueID"
+             label="&quot;Value&quot;"
+             value="envPair.Second"/>
+           <ButtonCell
+             action="selectedProperty.UseOverrideValue = true; selectedProperty.OverrideValue = envPair.Second;"
+             available="selectedProperty.OverrideValue != envPair.Second"
+             hideIfDisabled="false"
+             id="CopyButon"
+             value="&quot;Use this Value&quot;"/>
+         </Row>
+       </RowIterator>
+     </ListViewPanel>
+     <PanelDivider
+       visible="training.util.properties.framework.PropertyConstants.EnablePropertyUpdate"/>
+     <DetailViewPanel>
+       <Variable
+         initialValue="null"
+         name="keyToTest"
+         type="String"/>
+       <Variable
+         initialValue="null"
+         name="value"
+         type="String"/>
+       <InputColumn>
+         <Label
+           label="&quot;For testing the property, place the key and hit enter&quot;"/>
+         <TextInput
+           editable="true"
+           id="KeYIDFOrTest"
+           label="&quot;Key&quot;"
+           value="keyToTest"/>
+         <TextInput
+           id="ValueID"
+           label="&quot;Value&quot;"
+           value="value"/>
+         <ButtonInput
+           action="try { value = keyToTest == null ? null : training.util.properties.framework.PropertyReader.getProperty(keyToTest) }catch(e){value = &quot;No such key found&quot;}"
+           id="TestID"
+           value="&quot;Test&quot;"/>
+         <ButtonInput
+           action="keyToTest=null; value=null"
+           id="ClearField"
+           value="&quot;Clear&quot;"
+           visible="keyToTest != null or value != null"/>
+       </InputColumn>
+     </DetailViewPanel>
+   </Screen>
+    <Code><![CDATA[uses gw.api.database.Query
+uses gw.pl.persistence.core.Key
+
+function canCommit(prop : ApplicationProperties) : boolean {
+  if(prop.NewlyAdded){
+    var cnt = Query.make(ApplicationProperties)
+        .compareIgnoreCase(ApplicationProperties#Key, Equals, prop.Key)
+        .compare(ApplicationProperties#ID, NotEquals, prop.ID)
+        .select().Count
+    return cnt <= 0
+  }
+  else{
+    return true
+  }
+}]]></Code>
+  </Page>
+</PCF>

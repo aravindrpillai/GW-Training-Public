@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DevConsoleHistory"
+  table="devconsolehistory"
+  type="keyable">
+  <column
+    desc="Time at which the query was executed"
+    name="ExecutedTime"
+    nullok="false"
+    type="datetime"/>
+  <column
+    name="Content"
+    nullok="true"
+    type="blob"/>
+  <column
+    desc="True if the code executed is SQL"
+    name="IsSQLQuery"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="IP address of Guest"
+    name="ClientIP"
+    nullok="false"
+    type="shorttext"/>
+  <foreignkey
+    fkentity="User"
+    name="UserExecuted"
+    nullok="false"/>
+  <column
+    default="0"
+    desc="Flag will be true if the DB data is updated"
+    name="DataManipulated"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="0"
+    desc="This is only for SQL Queries"
+    name="RowsAffected"
+    nullok="true"
+    type="integer"/>
+  <column
+    default="0"
+    desc="true if execution is failed"
+    name="ExecutionFailed"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="Execution Error Message"
+    name="ErrorMessage"
+    nullok="true"
+    type="longtext"/>
+  <index
+    name="SearchIndex">
+    <indexcol keyposition="1" name="ExecutedTime"/>
+    <indexcol keyposition="2" name="IsSQLQuery"/>
+    <indexcol keyposition="3" name="DataManipulated"/>
+    <indexcol keyposition="4" name="ExecutionFailed"/>
+  </index>
+</entity>

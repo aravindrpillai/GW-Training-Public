@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<gx-model type="entity.Account" xmlns="http://guidewire.com/gx" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <includes>
+    <include
+      path="AccountNumber"
+      propertyInclusionType="KEY"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+    <include
+      path="AccountStatus.Code"
+      propertyInclusionType="NORMAL"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+    <include
+      path="AccountStatus.Description"
+      propertyInclusionType="NORMAL"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+    <include
+      path="CreateTime.XmlDateTime"
+      propertyInclusionType="NORMAL"
+      type="gw.xml.date.XmlDateTime"
+      xmlType="xs:dateTime"/>
+    <include
+      path="Nickname"
+      propertyInclusionType="NORMAL"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+    <include
+      path="PublicID"
+      propertyInclusionType="NORMAL"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+  </includes>
+</gx-model>

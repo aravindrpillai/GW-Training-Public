@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn">
+
+  <Appenders>
+    <RollingFile name="INTEGRATION" fileName="${guidewire.logDirectory}/INTEGRATION.log" filePattern="${guidewire.logDirectory}/INTEGRATION.log%d{.yyyy-MM-dd}">
+      <PatternLayout pattern="${file.defaultPattern}" charset="UTF-8"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10 MB" />
+        <TimeBasedTriggeringPolicy/>
+      </Policies>
+      <DefaultRolloverStrategy max="20" />
+    </RollingFile>
+
+    <RollingFile name="GENERAL" fileName="${guidewire.logDirectory}/GENERAL.log" filePattern="${guidewire.logDirectory}/GENERAL.log%d{.yyyy-MM-dd}">
+      <PatternLayout pattern="${file.defaultPattern}" charset="UTF-8"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10 MB" />
+        <TimeBasedTriggeringPolicy/>
+      </Policies>
+      <DefaultRolloverStrategy max="20" />
+    </RollingFile>
+
+    <RollingFile name="REST_WEBSERVICES" fileName="${guidewire.logDirectory}/REST_WEBSERVICES.log" filePattern="${guidewire.logDirectory}/REST_WEBSERVICES.log%d{.yyyy-MM-dd}">
+      <PatternLayout pattern="${file.defaultPattern}" charset="UTF-8"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10 MB" />
+        <TimeBasedTriggeringPolicy/>
+      </Policies>
+      <DefaultRolloverStrategy max="20" />
+    </RollingFile>
+
+    
+  </Appenders>
+  <Loggers>
+    <Logger name="GENERAL" additivity="false" level="all">
+      <AppenderRef ref="GENERAL"/>
+    </Logger>
+
+    <Logger name="INTEGRATION" additivity="false" level="all">
+      <AppenderRef ref="INTEGRATION"/>
+    </Logger>
+
+    <Logger name="REST_WEBSERVICES" additivity="false" level="all">
+      <AppenderRef ref="REST_WEBSERVICES"/>
+    </Logger>
+  </Loggers>
+</Configuration>

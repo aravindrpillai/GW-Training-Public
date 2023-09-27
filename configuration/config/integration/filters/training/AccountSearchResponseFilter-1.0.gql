@@ -1,0 +1,9 @@
+{
+    Status
+    Message
+    AccountNumber
+    AccountHolderName
+    AddressLine1
+    AddressLine2
+    Zipcode
+}

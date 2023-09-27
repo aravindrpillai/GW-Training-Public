@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ApplicationProperties"
+  desc="Application Properties"
+  table="applicationproperties"
+  type="versionable"
+  extendable="false">
+  <column
+    name="NewlyAdded"
+    default="0"
+    nullok="false"
+    type="bit"/>
+  <column name="Description" columnName="description" desc="Field to hold Values" nullok="true" type="longtext"/>
+  <column name="Root" columnName="root" desc="Field to hold file name" nullok="false" type="shorttext"/>
+  <column name="Key" columnName="key" desc="Field to hold Keys" nullok="false" type="shorttext"/>
+  <column name="Value" columnName="value" desc="Field to hold Values" nullok="true" type="longtext"/>
+  <column name="OverrideValue" columnName="overridevalue" desc="Field to hold Values" nullok="true" type="longtext"/>
+  <column name="UseOverrideValue" default="0" nullok="false" type="bit"/>
+</entity>

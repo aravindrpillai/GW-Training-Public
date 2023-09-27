@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <PanelSet
+    editable="true"
+    id="GoogleMapsPanelSet">
+    <Require
+      name="address"
+      type="Address"/>
+    <Variable
+      initialValue="&quot;API_KEY_HERE&quot;"
+      name="gmapAPIKey"
+      type="String"/>
+    <DetailViewPanel>
+      <InputColumn>
+        <InputDivider/>
+        <TextInput
+          id="GWLatID"
+          label="&quot;Latitude&quot;"
+          value="address?.SpatialPoint?.Latitude"
+          valueType="java.math.BigDecimal"/>
+        <TextInput
+          id="GWLngID"
+          label="&quot;Longitude&quot;"
+          value="address?.SpatialPoint?.Longitude"
+          valueType="java.math.BigDecimal"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <TemplatePanel
+      actionHandler="new training.util.gmaps.GmapActionHandler(address)"
+      renderCall="training.util.gmaps.GMapsTemplate.render(__writer, __helper, address, gmapAPIKey, CurrentLocation.InEditMode)"
+      updateHandler="new training.util.gmaps.GmapUpdateHandler(address)">
+    </TemplatePanel>
+  </PanelSet>
+</PCF>

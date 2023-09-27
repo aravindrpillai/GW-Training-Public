@@ -1,0 +1,27 @@
+<rules>
+
+  <rule
+    name="More Than One Space Rule"
+    description="Rule to check for more than one space between words"
+    className="MoreThanOneSpaceRule"
+    disabled="false"
+    severity="3"
+    ruleFor="gosu"/>
+
+  <rule
+    name="Entity Fields Without Description Rule"
+    description="Rule to check for entity fields without description"
+    className="EntityFieldsWithoutDescRule"
+    disabled="false"
+    severity="3"
+    ruleFor="entity, typelist"/>
+
+  <rule
+    name="Equality check Rule"
+    description="Equality check must be done using == operator and not using .equals()"
+    className="EqualityCheckRule"
+    disabled="false"
+    severity="2"
+    ruleFor="gosu, pcf" />
+
+</rules>

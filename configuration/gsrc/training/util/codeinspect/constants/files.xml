@@ -1,0 +1,37 @@
+<!-- =============================================================================== -->
+<!-- Folders must end with *.*                                                       -->
+<!-- For searching the entire item, just put *.* as an Item                          -->
+<!-- Extension of file names are not required                                        -->
+<!-- ******************************************************************************* -->
+<!-- Entity: Provide the file name alone                                             -->
+<!-- T.List: Provide the file name alone                                             -->
+<!-- PCF   : only provide the complete path inside pcf folder                        -->
+<!-- Rules : Item value must start with the Category name                            -->
+<!--         And Category must be the name of one child folder from your             -->
+<!--         RuleSet package                                                         -->
+<!-- Gosu  : Specify the absolute path starting gosu or gtest                        -->
+<!-- =============================================================================== -->
+<files>
+
+  <file type="entity" disable="true">
+    <item>*.*</item>
+  </file>
+
+  <file type="typelist" disable="true"/>
+
+  <file type="pcf" disable="true">
+    <item>*.*</item>
+  </file>
+
+  <file type="rules" disable="true">
+    <item>EventMessage/*.*</item>
+    <item>Audit/*.*</item>
+  </file>
+
+  <file type="gosu" disable="false">
+    <item>gsrc/test/code/AlexaBillingInfo.gs</item>
+  </file>
+
+  <file type="displaykey" disable="true"/>
+
+</files>

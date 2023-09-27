@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "Response": {
+      "type": "object",
+      "properties": {
+        "Status": {
+          "type": "boolean",
+          "description": "Status of service."
+        },
+        "Message": {
+          "type": "string",
+          "description": "Error description if any."
+        },
+        "AccountNumber": {
+          "type": "string",
+          "description": "AccountNumber sent in the response."
+        },
+        "AccountHolderName": {
+          "type": "string",
+          "description": "AccountHolderName sent in the response."
+        },
+        "AddressLine1": {
+          "type": "string",
+          "description": "AddressLine1 sent in the response."
+        },
+        "AddressLine2": {
+          "type": "string",
+          "description": "AddressLine2 sent in the response."
+        },
+        "Zipcode": {
+          "type": "string",
+          "description": "Zipcode sent in the response."
+        }
+      }
+    }
+  }
+}

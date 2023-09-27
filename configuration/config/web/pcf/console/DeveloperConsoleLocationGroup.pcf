@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <LocationGroup
+    browserTitle="&quot;GW Developer Console&quot;"
+    canVisit="training.util.console.util.ConsolePermissionUtil.Instance.CanVisitPage"
+    id="DeveloperConsoleLocationGroup"
+    title="&quot;Database IDE&quot;">
+    <LocationRef
+      location="DeveloperConsoleIDE()"/>
+  </LocationGroup>
+</PCF>

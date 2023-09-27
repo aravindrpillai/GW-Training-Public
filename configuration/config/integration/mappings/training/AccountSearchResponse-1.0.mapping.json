@@ -1,0 +1,33 @@
+{
+  "schemaName" : "training.AccountSearchResponse-1.0",
+  "mappers" : {
+    "Response": {
+      "schemaDefinition": "Response",
+      "root": "training.integrations.rest.expose.ResponseDTO_EXT",
+      "properties": {
+        "Status": {
+          "path": "ResponseDTO_EXT.Status"
+        },
+        "Message": {
+          "path": "ResponseDTO_EXT.Message",
+          "predicate": "ResponseDTO_EXT.Message != null"
+        },
+        "AccountNumber": {
+          "path": "ResponseDTO_EXT.Account.AccountNumber"
+        },
+        "AccountHolderName": {
+          "path": "ResponseDTO_EXT.Account.AccountHolder.DisplayName"
+        },
+        "AddressLine1": {
+          "path": "ResponseDTO_EXT.Account?.AccountHolderContact?.PrimaryAddress?.AddressLine1"
+        },
+        "AddressLine2": {
+          "path": "ResponseDTO_EXT.Account?.AccountHolderContact?.PrimaryAddress?.AddressLine2"
+        },
+        "Zipcode": {
+          "path": "ResponseDTO_EXT.Account?.AccountHolderContact?.PrimaryAddress?.PostalCode"
+        }
+      }
+    }
+  }
+}

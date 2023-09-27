@@ -1,0 +1,22 @@
+package rules.EventMessage.EventFired_dir
+
+@gw.rules.RuleName("Custom Messaging")
+internal class CustomMessaging {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+/*start00rule*/
+return messageContext.DestID == 61 and messageContext.EventName == "MyCustomEvent_Ext"
+/*end00rule*/
+}
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+/*start00rule*/
+
+    print("Control Inside EFR.")
+
+    var payload = "{'efr_payload': 'EFR Payload'}"
+    messageContext.createMessage(payload)
+
+    print("EFR Scope Ended...!!!\n")
+/*end00rule*/
+  }
+}

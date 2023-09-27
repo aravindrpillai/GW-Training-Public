@@ -1,0 +1,1 @@
+var businessDayEnd = gw.api.system.PLConfigParameters.BusinessDayEnd.Value

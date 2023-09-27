@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<database-config
+  xmlns="http://guidewire.com/database-config">
+
+  <!-- H2 (meant for demo/quickstart use only!) -->
+  <database
+    name="PolicyCenterDatabase"
+    dbtype="h2">
+    <dbcp-connection-pool
+      jdbc-url="jdbc:h2:file:/tmp/guidewire/pc;CACHE_SIZE=32000;AUTO_SERVER=ture;MVCC=true"/>
+  </database>
+
+</database-config>

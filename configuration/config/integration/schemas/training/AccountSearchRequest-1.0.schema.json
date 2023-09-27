@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "Request": {
+      "type": "object",
+      "properties": {
+        "AccountNumber": {
+          "type": "string",
+          "x-gw-nullable": false,
+          "description": "Account number used for searching he account"
+        }
+      }
+    }
+  }
+}

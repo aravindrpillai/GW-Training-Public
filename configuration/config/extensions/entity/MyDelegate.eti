@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<delegate
+  xmlns="http://guidewire.com/datamodel"
+  name="MyDelegate">
+  <column
+    desc="This column will be added to any entity which implements this delegate"
+    name="DelegateTableColumn"
+    nullok="true"
+    type="shorttext"/>
+  <implementsInterface
+    iface="training.integrations.delegates.MyDelegate"
+    impl="training.integrations.delegates.MyDelegateImpl"/>
+</delegate>

@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    id="DeveloperConsoleIDE"
+    startInEditMode="true"
+    title="&quot;Guidewire Developer Console&quot;">
+    <Variable
+      initialValue="&quot;SELECT &quot;+&quot;\n&quot;+&quot;ID, PUBLICID, ACCOUNTNUMBER, NICKNAME, UPDATETIME , ACCOUNTSTATUSUPDATETIME, UPDATEUSERID, RETIRED, INDUSTRYCODEID, ACCOUNTSTATUS, PRIMARYLOCALE &quot;+&quot;\n&quot;+&quot;FROM PC_ACCOUNT &quot;+&quot;\n&quot;+&quot;ORDER BY ID DESC&quot;"
+      name="sqlQuery"
+      type="String"/>
+    <Variable
+      initialValue="null"
+      name="resultSet"
+      type="java.sql.ResultSet"/>
+    <Variable
+      initialValue="null"
+      name="dataDTO"
+      type="training.util.console.dto.DataDTO"/>
+    <Variable
+      initialValue="true"
+      name="isSQL"
+      type="boolean"/>
+    <Variable
+      initialValue="null"
+      name="gosuOutput"
+      type="String"/>
+    <Variable
+      initialValue="&quot;uses gw.api.database.Query\n\nprint(\&quot;Starting to debug\\n\&quot;)\n\nvar accounts = Query.make(Account).select().limit(10)\n\nfor(acc in accounts index i) {\n  print(i+\&quot; - \&quot;+acc.AccountNumber)\n}\n\nprint(\&quot;\\ndone\&quot;)&quot;"
+      name="gosuCode"
+      type="String"/>
+    <Variable
+      initialValue="false"
+      name="showHistory"
+      type="boolean"/>
+    <Variable
+      initialValue="null"
+      name="selectedCode"
+      type="String"/>
+    <Variable
+      initialValue="null"
+      name="selectedError"
+      type="String"/>
+    <Screen
+      editable="true">
+      <Toolbar
+        visible="true">
+        <ToolbarButton
+          action="execute()"
+          available="not showHistory"
+          id="RunButton"
+          label="return isSQL ? &quot;Execute SQL Query&quot; : &quot;Execute GOSU Code&quot;"/>
+        <ToolbarButton
+          action="sqlQuery = null; gosuCode=null; gosuOutput = null; dataDTO=null"
+          available="not showHistory"
+          id="ClearButton"
+          label="&quot;Clear Panel&quot;"/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="isSQL = false"
+          available="not showHistory"
+          id="GosuSwitchID"
+          label="&quot;Switch To Gosu&quot;"
+          visible="isSQL"/>
+        <ToolbarButton
+          action="isSQL = true"
+          available="not showHistory"
+          id="SqlSwitchID"
+          label="&quot;Switch To SQL&quot;"
+          visible="(not isSQL)"/>
+        <ToolbarDivider/>
+
+        <ToolbarButton
+          action="showHistory = !showHistory; "
+          id="HistoryID"
+          label="showHistory ? &quot;Go Back To Console&quot; : &quot;Show History&quot;"
+          visible="true"/>
+        <ToolbarDivider/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="logout:*"
+          id="LogoutID"
+          label="&quot;Logout&quot;"
+          visible="true"/>
+      </Toolbar>
+      <SearchPanel
+        criteriaName="searchCriteria"
+        id="HistorySearchID"
+        resultsName="histories"
+        search="searchCriteria.performSearch()"
+        searchCriteria="new training.util.console.handler.ConsoleHistoryHandler()"
+        searchCriteriaType="training.util.console.handler.ConsoleHistoryHandler"
+        searchOnEnter="true"
+        searchResultsType="List&lt;training.util.console.dto.HistoryDTO&gt;">
+        <DetailViewPanel
+          editable="true"
+          visible="showHistory">
+          <InputColumn>
+            <DateInput
+              editable="true"
+              id="SearchDate"
+              label="&quot;Date&quot;"
+              required="true"
+              value="searchCriteria.ExecutedTime"/>
+            <RangeInput
+              editable="true"
+              id="SQLFilter"
+              label="&quot;Code Type&quot;"
+              noneSelectedLabel="&quot;All&quot;"
+              value="searchCriteria.CodeType"
+              valueRange="{&quot;SQL Only&quot;, &quot;Gosu Only&quot;}"
+              valueType="java.lang.String"/>
+          </InputColumn>
+          <InputColumn>
+            <RangeInput editable="true" id="QueryType" label="&quot;Execution Type&quot;" noneSelectedLabel="&quot;All&quot;" value="searchCriteria.QueryType" valueRange="{&quot;Data Manipulations Only&quot;, &quot;View Only&quot;}" valueType="java.lang.String"/>
+            <RangeInput editable="true" id="ErrorFilter" label="&quot;Execution Status&quot;" noneSelectedLabel="&quot;All&quot;" value="searchCriteria.FailedType" valueRange="{&quot;Successful&quot;, &quot;Failed&quot;}" valueType="java.lang.String"/>
+          </InputColumn>
+          <InputColumn>
+            <BooleanRadioInput
+              editable="true"
+              id="ReadPurgeData"
+              label="&quot;Read Purged Data As Well&quot;"
+              value="searchCriteria.ReadFromPurgeTableAlso"/>
+            <ButtonInput action="selectedCode = null; selectedError = null; gw.api.util.SearchUtil.search();" id="SearchButton" value="&quot;Search&quot;"/>
+          </InputColumn>
+        </DetailViewPanel>
+        <ListViewPanel visible="showHistory">
+          <RowIterator editable="false" elementName="history" value="histories" valueType="List&lt;training.util.console.dto.HistoryDTO&gt;">
+            <Row>
+              <TextCell id="UserID" label="&quot;Executed User&quot;" value="(history as training.util.console.dto.HistoryDTO).UserExecuted.DisplayName"/>
+              <TextCell id="ClientIPID" label="&quot;Client IP&quot;" value="(history as training.util.console.dto.HistoryDTO).ClientIP"/>
+              <TextCell id="ExecutedTime" label="&quot;Executed Time&quot;" value="(history as training.util.console.dto.HistoryDTO).ExecutedTime.toString()"/>
+              <TextCell id="RowsAffectedID" label="&quot;Rows Affected&quot;" value="(history as training.util.console.dto.HistoryDTO).RowsAffected.toString()" visible="searchCriteria.QueryType != &quot;View Only&quot;"/>
+              <TextCell id="QueryType" label="&quot;Code Type&quot;" value="(history as training.util.console.dto.HistoryDTO).IsSQLQuery ? &quot;SQL&quot; : &quot;Gosu&quot;" visible="searchCriteria.CodeType == null"/>
+              <TextCell id="Manipulated" label="&quot;Data Updated&quot;" value="(history as training.util.console.dto.HistoryDTO).DataManipulated ? &quot;Yes&quot; : &quot;No&quot;" visible="searchCriteria.QueryType == null"/>
+              <TextCell id="FailedID" label="&quot;Completion Status&quot;" value="(history as training.util.console.dto.HistoryDTO).ExecutionFailed ? &quot;Failed&quot; : &quot;Successful&quot;" visible="searchCriteria.FailedType != &quot;Successful&quot;"/>
+              <ButtonCell action="selectedCode = org.apache.commons.io.IOUtils.toString((history as training.util.console.dto.HistoryDTO).Content.toInputStream(), &quot;UTF-8&quot;); selectedError = (history as training.util.console.dto.HistoryDTO)?.ErrorMessage;" id="CodeButtonID" label="&quot;Show Code&quot;" value="&quot;Show&quot;"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+        <DetailViewPanel visible="showHistory and selectedCode != null">
+          <InputColumn>
+            <Label label="&quot;Code Executed&quot;"/>
+            <InputDivider/>
+            <Label label="selectedCode"/>
+          </InputColumn>
+          <InputColumn>
+            <Label label="&quot;Error Message&quot;"/>
+            <InputDivider/>
+            <Label label="selectedError == null ? &quot;No Error&quot; : selectedError"/>
+          </InputColumn>
+        </DetailViewPanel>
+      </SearchPanel>
+      <DetailViewPanel visible="isSQL and (not showHistory)">
+        <InputColumn>
+          <TextAreaInput editable="true" id="QueryID" label="&quot;Write your SQL query here&quot;" labelAbove="true" value="sqlQuery" valueSectionMaxWidth="1200px" valueSectionMinWidth="1200px" valueSectionWidth="1200px"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <DetailViewPanel visible="(not isSQL) and (not showHistory)">
+        <InputColumn>
+          <TextAreaInput editable="true" id="GosuID" label="&quot;Write your GOSU code here&quot;" labelAbove="true" numRows="30" value="gosuCode"/>
+        </InputColumn>
+        <InputColumn>
+          <Label label="gosuOutput"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelColumn visible="isSQL and (not showHistory)">
+        <DetailViewPanel visible="dataDTO != null">
+          <InputColumn>
+            <Label label="dataDTO.Values.Count+ &quot; Result(s) found | Number of Columns is &quot;+dataDTO.Fields.Count" visible="not dataDTO?.IsDataUpdate"/>
+            <Label label="dataDTO.RowsAffectedCount+ &quot; Record(s) Affected&quot;" visible="dataDTO?.IsDataUpdate"/>
+          </InputColumn>
+        </DetailViewPanel>
+        <ListViewPanel id="ResultLV">
+          <Row visible="dataDTO?.Fields?.HasElements">
+            <CellIterator elementName="fieldName" value="dataDTO?.Fields" valueType="java.util.List&lt;java.lang.String&gt;">
+              <TextCell id="Column" value="fieldName"/>
+            </CellIterator>
+          </Row>
+          <RowIterator editable="false" elementName="value" id="ValuesSectionID" value="dataDTO?.Values" valueType="java.util.List&lt;java.util.List&lt;java.lang.String&gt;&gt;" visible="dataDTO?.Values?.HasElements">
+            <Row>
+              <CellIterator elementName="eachValue" value="value" valueType="java.util.List&lt;java.lang.String&gt;">
+                <TextCell id="ValueCellID" value="eachValue"/>
+              </CellIterator>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelColumn>
+
+
+      <TemplatePanel>
+        <TemplatePanelContents>
+          <![CDATA[
+
+<script type = "text/javascript" >
+  document.getElementById("gw-west-panel").style.display = 'none';
+  document.getElementById("gw-north-panel").style.display = 'none';
+</script>
+
+]]>
+</TemplatePanelContents>
+</TemplatePanel>
+    </Screen>
+    <Code>uses training.util.console.handler.GosuHandler
+    uses training.util.console.handler.SQLHandler
+
+    function execute() {
+      dataDTO = null
+      gosuOutput = null
+      if (isSQL) {
+        dataDTO = new SQLHandler().executeQuery(sqlQuery)
+      } else {
+        gosuOutput = new GosuHandler().execute(gosuCode)
+      }
+    }</Code>
+  </Page>
+</PCF>

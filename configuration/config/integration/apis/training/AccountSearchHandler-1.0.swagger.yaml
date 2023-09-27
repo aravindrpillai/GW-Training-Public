@@ -1,0 +1,49 @@
+swagger: '2.0'
+info:
+  version: "2.0.0"
+  description: "Account Search Services"
+  title:  "Account Search Services"
+basePath: "/Account"
+x-gw-schema-import:
+  AccountSearchSchemaRequestRef : training.AccountSearchRequest-1.0
+  AccountSearchSchemaResponseRef : training.AccountSearchResponse-1.0
+x-gw-apihandlers:
+  - training.integrations.rest.expose.RestServiceExpose_Ext
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /Search:
+    post :
+      summary: "Searches Account In BillingCenter"
+      description: "Searches Account In BillingCenter"
+      operationId: "searchAccount"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "AccountSearchSchemaRequestRef#/definitions/Request"
+          required: true
+      responses:
+        '200':
+          description: "Successful operation"
+          schema:
+            $ref: "AccountSearchSchemaResponseRef#/definitions/Response"
+
+  /SearchWithMappingAndFilter:
+    post :
+      summary: "Searches Account In BillingCenter"
+      description: "Searches Account In BillingCenter"
+      operationId: "searchAccountWithMapperAndFilter"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "AccountSearchSchemaRequestRef#/definitions/Request"
+          required: true
+      responses:
+        '200':
+          description: "Successful operation"
+          schema:
+            $ref: "AccountSearchSchemaResponseRef#/definitions/Response"

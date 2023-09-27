@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<gx-model type="training.integrations.gxmodel.on.dto.GXDTO" xmlns="http://guidewire.com/gx" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <includes>
+    <include
+      path="SenderName"
+      propertyInclusionType="NORMAL"
+      type="java.lang.String"
+      xmlType="xs:string"/>
+    <include
+      path="Policy.BeanVersion"
+      propertyInclusionType="NORMAL"
+      type="java.lang.Integer"
+      xmlType="xs:int"/>
+    <include
+      path="Date"
+      propertyInclusionType="NORMAL"
+      type="java.util.Date"
+      xmlType="xs:dateTime"/>
+    <include
+      path="Account.AccountStatus"
+      propertyInclusionType="NORMAL"
+      type="typekey.AccountStatus"
+      xmlType="xs:string"/>
+    <include
+      path="IsPolicyAnyGood"
+      propertyInclusionType="NORMAL"
+      type="boolean"
+      xmlType="xs:boolean"/>
+  </includes>
+</gx-model>

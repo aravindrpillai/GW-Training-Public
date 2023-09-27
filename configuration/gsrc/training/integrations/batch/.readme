@@ -1,0 +1,21 @@
+API Runnable:
+    Maintenance Tool API
+        - startBatchProcess(processName : String) : ProcessID
+        - startBatchProcessWithArguments(processName : String, arguments : String[]) : ProcessID
+        - requestTerminationOfBatchProcessByID(pid : ProcessID) : boolean
+
+Maintenance Only:
+    Only when the app server runs on maintenance (NODAEMONS) run level.
+    For all other processes, the server run level must be at the DAEMONS run level or higher for a process to execute.
+
+Batch process prioritization:
+    FILE : batch-process-config.xml
+    File provides a way to control the execution of multiple batch processes.
+    <settings
+        env = "prod" ---------------------> Environment name
+        defaultServer="#batch"  ----------> '#' represents the server role and without '#' means the node name.
+                                            Available roles are present in config.xml (field - registry)
+        startupDelay="0, 5, 15, 90, 180" -> The number of seconds the next batch needs to wait
+        startupTimeout="600"  ------------> Number of seconds allotted for a batch process to acquire a lease.
+        pollInterval="60" ----------------> Waiting time to acquire new available leases.
+    />

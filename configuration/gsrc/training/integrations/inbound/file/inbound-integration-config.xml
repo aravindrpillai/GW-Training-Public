@@ -1,0 +1,34 @@
+<!--
+NOTE:
+  <file-integration name="MyFilePollingIntegration"
+      "name" must be the name specified in the plugin for key "integrationservice"
+   pluginhandler
+      this must be the name of the plugin with the gosu implementation
+   processingmode
+       this must be either file or line
+   ordered
+      To handle multiple files at a time in parallel in multiple threads on this server,
+      set this value to false and ensure that the thread pool has at least two threads.
+
+-->
+
+<integrations>
+  <file-integration name="MyFilePollingIntegration" disabled="false">
+    <threadpool>gw_default</threadpool>
+    <pollinginterval>15</pollinginterval>
+    <throttleinterval>5</throttleinterval>
+    <ordered>true</ordered>
+    <stoponerror>false</stoponerror>
+    <transactional>false</transactional>
+    <osgiservice>true</osgiservice>
+    <traceabilityidcreationpoint>INBOUND_INTEGRATION_FILE</traceabilityidcreationpoint>
+    <pluginhandler>MyInboundIntegrationPlugin</pluginhandler>
+    <processingmode>line</processingmode>
+    <incoming>C:/tmp/file/incoming</incoming>
+    <processing>C:/tmp/file/processing</processing>
+    <error>C:/tmp/file/error</error>
+    <done>C:/tmp/file/done</done>
+    <charset>UTF-8</charset>
+    <createdirectories>true</createdirectories>
+  </file-integration>
+</integrations>

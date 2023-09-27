@@ -1,0 +1,6 @@
+Guidewire uses the following steps (or blocks) to create a workflow:
+    AutoStep
+    MessageStep
+    ActivityStep
+    ManualStep
+    Outcome
